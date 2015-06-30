@@ -16,12 +16,12 @@ var mongoose = require('mongoose');
  * Database connection
  */
 
-mongoose.connect('mongodb://localhost/devftest')
+mongoose.connect('mongodb://localhost/devftest');
 
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
+db.once('open', function () {
   console.log('MongoDB y mongoose listo');
 });
 

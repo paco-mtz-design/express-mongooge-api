@@ -3,24 +3,15 @@
 
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-
-var userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    trim: true,
-    required: true
-  },
-  mail: String
-});
-
-var User = mongoose.model('User', userSchema);
+var User = require('../mongoose_models/user');
 
 /* GET users listing. */
 /*jslint unparam: true */
 router.get('/', function (req, res, next) {
   User.find(function (err, users) {
-    if (err) return console.error(err);
+    if (err) {
+      return console.error(err);
+    }
     res.send(users);
   });
 });
@@ -32,7 +23,9 @@ router.get('/:username', function (req, res) {
     .findOne(
       { username: req.params.username },
       function (err, user) {
-        if (err) return console.error(err);
+        if (err) {
+          return console.error(err);
+        }
         res.send(user);
       }
     );
@@ -46,11 +39,13 @@ router.post('/', function (req, res) {
   });
 
   user.save(function (err) {
-    if (err) return console.error(err);
+    if (err) {
+      return console.error(err);
+    }
     res
       .status(200)
       .send({ saved: true, _id: user._id });
-  })
+  });
 });
 
 module.exports = router;
